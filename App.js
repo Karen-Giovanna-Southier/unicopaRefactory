@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image, ImageBackground, SectionList } from 'react-native';
+import { formatarData } from './utils/formatarData';
 import GameCard from './components/GameCard';
 import dados from './assets/dados.json';
 
@@ -6,27 +7,27 @@ export default function App() {
 
   const jogos = dados.jogos
   const agruparPorData = (jogos) => {
-  return jogos.reduce((acc, jogo) =>{
-    const data = jogo.data_brasilia;
-    if (!acc[data]) {
-      acc[data] = [];
-    }
+    return jogos.reduce((acc, jogo) => {
+      const data = jogo.data_brasilia;
+      if (!acc[data]) {
+        acc[data] = [];
+      }
 
-    acc[data].push(jogo);
+      acc[data].push(jogo);
 
-    return acc;
-    
-  }, {}); 
+      return acc;
+
+    }, {});
 
   }
 
   const jogosAgrupados = agruparPorData(jogos);
 
   const jogosTratados = Object.keys(jogosAgrupados).map(data => {
-    return{
+    return {
       title: data,
       data: jogosAgrupados[data]
-  }
+    }
   });
 
   console.log(jogosTratados)
@@ -34,27 +35,26 @@ export default function App() {
     <ImageBackground style={styles.container}
       source={require('./assets/bg-overlay.png')}>
 
-      
+
       <Image style={styles.logo}
         source={require('./assets/unicopa.png')}
       />
 
       <Text style={styles.title}>CALENDÁRIO</Text>
 
-     <SectionList
-     sections={jogosTratados}
-      keyExtractor={(item, index) => item + index}
-      renderItem={() => null}
+      <SectionList
+        sections={jogosTratados}
+        keyExtractor={(item, index) => item + index}
+        renderItem={() => null}
 
-      renderSectionHeader={({section}) => (
-        <View style={styles.card}>
-          <Text>{section.title}</Text>
-          {section.data.map(jogo => <GameCard key={jogo.id} game={jogo} />)}
-        </View>
-  )}
-     />
+        renderSectionHeader={({ section }) => (
+          <View style={styles.card}>
+            <Text style={styles.data}>{formatarData(section.title)}</Text>          {section.data.map(jogo => <GameCard key={jogo.id} game={jogo} />)}
+          </View>
+        )}
+      />
 
-     
+
     </ImageBackground>
   );
 }
