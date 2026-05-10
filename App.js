@@ -1,20 +1,11 @@
 import { StyleSheet, Text, Image, ImageBackground, SectionList } from 'react-native';
-import { formatarData } from './assets/FormatarData';
+import { formatarData, agruparPorData } from './assets/utils';
 import DiaCard from './components/DiaCard';
 import dados from './assets/dados.json';
 
 export default function App() {
 
   const jogos = dados.jogos
-
-  const agruparPorData = (jogos) => {
-    return jogos.reduce((acc, jogo) => {
-      const data = jogo.data_brasilia;
-      if (!acc[data]) acc[data] = [];
-      acc[data].push(jogo);
-      return acc;
-    }, {});
-  }
 
   const jogosAgrupados = agruparPorData(jogos);
 
