@@ -1,11 +1,15 @@
 import { View, Text, StyleSheet } from 'react-native';
 import GameCard from './GameCard';
+import { ordenarPorHora } from '../assets/utils';
 
 export default function DiaCard({ title, data }) {
+
+  const jogosOrdenados = ordenarPorHora(data);
+
   return (
     <View style={styles.card}>
       <Text style={styles.data}>{title}</Text>
-      {data.map(jogo => <GameCard key={jogo.id} game={jogo} />)}
+      {jogosOrdenados.map(jogo => <GameCard key={jogo.id} game={jogo} />)}
     </View>
   );
 }

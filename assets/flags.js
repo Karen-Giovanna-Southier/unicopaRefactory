@@ -41,7 +41,6 @@ const flags = {
   JOR: require("./jogos/jordan.png"),
   POR: require("./jogos/portugal.png"),
   COD: require("./jogos/democratic republic of congo.png"),
-  UZB: require("./jogos/uzbekistán.png"),
   COL: require("./jogos/colombia.png"),
   ENG: require("./jogos/england.png"),
   CRO: require("./jogos/croatia.png"),

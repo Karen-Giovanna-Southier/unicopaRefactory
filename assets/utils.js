@@ -11,3 +11,8 @@ export function agruparPorData(jogos) {
     return acc;
   }, {});
 }
+export function ordenarPorHora(jogos) {
+  return [...jogos].sort((a, b) =>
+    a.hora_brasilia.localeCompare(b.hora_brasilia)
+  );
+}
