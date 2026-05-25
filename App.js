@@ -1,6 +1,6 @@
 import { StyleSheet, Text, Image, ImageBackground, SectionList, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from 'react';
-import { formatarData, agruparPorData, ehHoje } from './assets/utils';
+import { formatarData, agruparPorData, jogoHoje } from './assets/utils';
 import DiaCard from './components/DiaCard';
 import dados from './assets/dados.json';
 
@@ -20,8 +20,30 @@ export default function App() {
   const jogosTratados = Object.keys(jogosAgrupados).sort().map(data => ({
     title: formatarData(data),
     data: jogosAgrupados[data],
-    hoje: ehHoje(data),
+    hoje: jogoHoje(data),
   }));
+
+  async function inserirusario(){
+    const {data, error} = await supabase 
+    .from('usuarios') //pega a tabela usuarios
+    .insert([{
+      nome: 'taffe',
+      ra: '0000000000000000',
+      email: 'teste@teste.com',
+      senha: '123456',
+      telefone: '46991852171',
+      data_nascimento: '2000-01-01',
+    }]) //um array pq vai receber varios dados, vai receber um objeto 
+  if (!error){
+    console.log('usuario inserido com sucesso')
+  }else{
+    console.log('Erro ao inserir usuarios', error)
+  }
+  //criar excessao que usuario ja existe
+  }
+  inserirusario();
+
+
 
   return (
     <ImageBackground style={styles.container}
@@ -92,9 +114,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 8,
   },
-  filtroBotao: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
+filtroBotao: {
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    marginBottom: '50%',
+    paddingBottom: 20,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#1e2d3d',
@@ -112,4 +136,5 @@ const styles = StyleSheet.create({
   filtroTextoAtivo: {
     color: '#040b13',
   },
+  
 });
