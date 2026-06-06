@@ -1,10 +1,8 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
 import flags from '../assets/flags';
 
-export default function GameCard({ game }) {
+export default function GameCard({ game, favoritado, onToggleFavorito }) {
 
-  const [favoritado, setFavoritado] = useState(false);
   const temBrasil = game.sigla_casa === 'BRA' || game.sigla_fora === 'BRA';
 
   return (
@@ -12,34 +10,28 @@ export default function GameCard({ game }) {
 
       <View style={styles.headerJogo}>
         <Text style={styles.grupo}>GRUPO {game.grupo}  {game.confronto}</Text>
-        <TouchableOpacity onPress={() => setFavoritado(!favoritado)}>
+        <TouchableOpacity onPress={() => onToggleFavorito(game.id)}>
           <Text style={[styles.estrela, favoritado && styles.estrelaAtiva]}>
             {favoritado ? '★' : '☆'}
           </Text>
         </TouchableOpacity>
       </View>
 
-      {temBrasil && (
-        <Text style={styles.badgeBrasil}>🇧🇷 Jogo do Brasil</Text>
-      )}
+      {temBrasil && <Text style={styles.badgeBrasil}>🇧🇷 Jogo do Brasil</Text>}
 
       <View style={styles.linhaPrincipal}>
-
         <View style={styles.time}>
           <Image style={styles.bandeira} source={flags[game.sigla_casa]} />
           <Text style={styles.sigla}>{game.sigla_casa}</Text>
         </View>
-
         <View style={styles.horario}>
           <Text style={styles.hora}>{game.hora_brasilia}</Text>
           <Text style={styles.subTitulo}>VS</Text>
         </View>
-
         <View style={styles.time}>
           <Text style={styles.sigla}>{game.sigla_fora}</Text>
           <Image style={styles.bandeira} source={flags[game.sigla_fora]} />
         </View>
-
       </View>
 
       <View style={styles.local}>
@@ -52,83 +44,20 @@ export default function GameCard({ game }) {
 }
 
 const styles = StyleSheet.create({
-  jogo: {
-    marginBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e2d3d',
-    paddingBottom: 15
-  },
-  jogoBrasil: {
-    backgroundColor: '#0d2b1a',
-    borderRadius: 8,
-    padding: 8,
-    borderLeftWidth: 3,
-    borderLeftColor: '#009C3B',
-  },
-  jogoFavoritado: {
-    borderWidth: 1,
-    borderColor: '#f2cc2f',
-    borderRadius: 8,
-    padding: 8,
-  },
-  headerJogo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 6,
-  },
-  badgeBrasil: {
-    color: '#009C3B',
-    fontSize: 11,
-    fontWeight: 'bold',
-    marginBottom: 6,
-  },
-  estrela: {
-    fontSize: 20,
-    color: '#8fa3b8',
-  },
-  estrelaAtiva: {
-    color: '#f2cc2f',
-  },
-  grupo: {
-    color: '#8fa3b8',
-    fontSize: 12,
-  },
-  linhaPrincipal: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  time: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8
-  },
-  bandeira: {
-    width: 28,
-    height: 28,
-    borderRadius: 14
-  },
-  sigla: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16
-  },
-  horario: {
-    alignItems: 'center'
-  },
-  hora: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  local: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  subTitulo: {
-    color: '#8fa3b8',
-    fontSize: 12
-  }
+  jogo: { marginBottom: 20, borderBottomWidth: 1, borderBottomColor: '#1e2d3d', paddingBottom: 15 },
+  jogoBrasil: { backgroundColor: '#0d2b1a', borderRadius: 8, padding: 8, borderLeftWidth: 3, borderLeftColor: '#009C3B' },
+  jogoFavoritado: { borderWidth: 1, borderColor: '#f2cc2f', borderRadius: 8, padding: 8 },
+  headerJogo: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 },
+  badgeBrasil: { color: '#009C3B', fontSize: 11, fontWeight: 'bold', marginBottom: 6 },
+  estrela: { fontSize: 20, color: '#8fa3b8' },
+  estrelaAtiva: { color: '#f2cc2f' },
+  grupo: { color: '#8fa3b8', fontSize: 12 },
+  linhaPrincipal: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  time: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  bandeira: { width: 28, height: 28, borderRadius: 14 },
+  sigla: { color: 'white', fontWeight: 'bold', fontSize: 16 },
+  horario: { alignItems: 'center' },
+  hora: { color: 'white', fontSize: 18, fontWeight: 'bold' },
+  local: { marginTop: 10, flexDirection: 'row', justifyContent: 'space-between' },
+  subTitulo: { color: '#8fa3b8', fontSize: 12 },
 });
