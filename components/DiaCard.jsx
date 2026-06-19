@@ -2,14 +2,16 @@ import { View, Text, StyleSheet } from 'react-native';
 import GameCard from './GameCard';
 import { ordenarPorHora } from '../assets/utils';
 
-export default function DiaCard({ title, data }) {
+export default function DiaCard({ title, data,hoje }) {
 
   const jogosOrdenados = ordenarPorHora(data);
 
+  console.log('hoje', hoje);
+
   return (
     <View style={styles.card}>
-      <Text style={styles.data}>{title}</Text>
-      {jogosOrdenados.map(jogo => <GameCard key={jogo.id} game={jogo} />)}
+      <Text style={styles.data,hoje && styles.hoje}>{title} - {hoje ? 'sim': 'não'}</Text>
+      {jogosOrdenados.map(jogo => <GameCard key={jogo.id} game={jogo} hoje={hoje} />)}
     </View>
   );
 }
@@ -27,5 +29,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10
+  },
+  hoje:{
+    backgroundColor: '#009C3B',
   }
 });

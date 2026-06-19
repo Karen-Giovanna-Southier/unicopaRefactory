@@ -16,3 +16,8 @@ export function ordenarPorHora(jogos) {
     a.hora_brasilia.localeCompare(b.hora_brasilia)
   );
 }
+export function jogoHoje(data) {
+  const hoje = new Date().toISOString().split('T')[0];
+
+  return data === hoje;
+}

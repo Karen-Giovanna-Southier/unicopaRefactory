@@ -1,17 +1,17 @@
 import { StyleSheet, Text, Image, ImageBackground, SectionList } from 'react-native';
-import { formatarData, agruparPorData } from './assets/utils';
+import { formatarData, agruparPorData, jogoHoje } from './assets/utils';
 import DiaCard from './components/DiaCard';
 import dados from './assets/dados.json';
 
 export default function App() {
 
   const jogos = dados.jogos
-
   const jogosAgrupados = agruparPorData(jogos);
 
   const jogosTratados = Object.keys(jogosAgrupados).map(data => ({
     title: formatarData(data),
-    data: jogosAgrupados[data]
+    data: jogosAgrupados[data],
+    hoje: jogoHoje(data),
   }));
 
   return (
@@ -29,7 +29,8 @@ export default function App() {
         keyExtractor={(item, index) => item + index}
         renderItem={() => null}
         renderSectionHeader={({ section }) => (
-          <DiaCard title={section.title} data={section.data} />
+        
+          <DiaCard title={section.title} data={section.data} hoje={section.hoje}/>
         )}
       />
 
